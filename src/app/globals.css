@@ -1,26 +1,126 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap');
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', 'Courier New', monospace;
+
+  --color-bg0:            #0d0f12;
+  --color-bg1:            #13161b;
+  --color-bg2:            #191d24;
+  --color-bg3:            #1f2430;
+  --color-bg-hover:       rgba(255,255,255,0.035);
+
+  --color-text-primary:   #eef0f4;
+  --color-text-secondary: #8f96a8;
+  --color-text-muted:     #555d6e;
+
+  --color-accent-green:   #4ade80;
+  --color-accent-green-10: rgba(74,222,128,0.10);
+  --color-accent-green-20: rgba(74,222,128,0.20);
+  --color-accent-green-40: rgba(74,222,128,0.40);
+  --color-accent-blue:    #60a5fa;
+  --color-accent-amber:   #fbbf24;
+  --color-accent-red:     #f87171;
+
+  --color-border:         rgba(255,255,255,0.07);
+  --color-border-green:   rgba(74,222,128,0.35);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+[data-theme="light"] {
+  --color-bg0:            #f0f4fa;
+  --color-bg1:            #ffffff;
+  --color-bg2:            #f8fafc;
+  --color-bg3:            #eef2f8;
+  --color-bg-hover:       rgba(0,0,0,0.03);
+
+  --color-text-primary:   #0e1117;
+  --color-text-secondary: #4a5568;
+  --color-text-muted:     #94a3b8;
+
+  --color-accent-green:   #16a34a;
+  --color-accent-green-10: rgba(22,163,74,0.08);
+  --color-accent-green-20: rgba(22,163,74,0.18);
+  --color-accent-green-40: rgba(22,163,74,0.35);
+  --color-accent-blue:    #2563eb;
+  --color-accent-amber:   #d97706;
+  --color-accent-red:     #dc2626;
+
+  --color-border:         rgba(0,0,0,0.08);
+  --color-border-green:   rgba(22,163,74,0.30);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg0);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
+.anim-up { animation: fadeUp 0.55s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-sl { animation: fadeSlide 0.45s cubic-bezier(0.16,1,0.3,1) both; }
+.d1 { animation-delay: 0.06s; }
+.d2 { animation-delay: 0.12s; }
+.d3 { animation-delay: 0.18s; }
+.d4 { animation-delay: 0.24s; }
+
+.skel {
+  background: linear-gradient(90deg, var(--color-bg2) 25%, var(--color-bg3) 50%, var(--color-bg2) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.provider-card {
+  background: var(--color-bg2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16,1,0.3,1), box-shadow 0.2s ease, border-color 0.2s ease;
+  outline: none;
+}
+.provider-card:hover,
+.provider-card:focus-within {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.25);
+  border-color: var(--color-border-green);
+}
+.provider-card:hover .card-chevron,
+.provider-card:focus-within .card-chevron {
+  transform: translateX(4px);
+  color: var(--color-accent-green);
+}
+.card-chevron {
+  transition: transform 0.2s, color 0.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-bg3); border-radius: 10px; }

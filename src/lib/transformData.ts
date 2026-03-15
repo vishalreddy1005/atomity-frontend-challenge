@@ -14,9 +14,9 @@ function userToCluster(user: JPUser, clusterIndex: number): Cluster {
   const lng = Math.abs(parseFloat(user.address.geo.lng));
 
   const cpu      = Math.round(480 + lat * 38 + s * 82);
-  const ram      = Math.round(cpu  * (0.50 + (lng % 10) / 100));
-  const storage  = Math.round(cpu  * 0.095);
-  const network  = Math.round(cpu  * 0.120);
+  const ram      = Math.round(cpu * (0.50 + (lng % 10) / 100));
+  const storage  = Math.round(cpu * 0.095);
+  const network  = Math.round(cpu * 0.120);
   const hasGpu   = s % 3 === 0;
   const gpu      = hasGpu ? Math.round(cpu * 0.33) : 0;
   const efficiency = Math.round(8 + ((lat + lng) % 57));
@@ -30,13 +30,13 @@ function userToCluster(user: JPUser, clusterIndex: number): Cluster {
       return {
         id:         `ns-${user.id}-${i}`,
         name:       `Namespace ${letter}`,
-        cpu:        Math.round(cpu     * ratio),
-        ram:        Math.round(ram     * ratio),
+        cpu:        Math.round(cpu * ratio),
+        ram:        Math.round(ram * ratio),
         storage:    Math.round(storage * ratio),
         network:    Math.round(network * ratio),
-        gpu:        Math.round(gpu     * ratio),
+        gpu:        Math.round(gpu * ratio),
         efficiency: nsEff,
-        total:      Math.round(total   * ratio),
+        total:      Math.round(total * ratio),
       };
     },
   );
